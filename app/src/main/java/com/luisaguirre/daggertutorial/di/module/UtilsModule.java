@@ -10,23 +10,23 @@ import com.luisaguirre.daggertutorial.util.RxUtilsAbs;
 
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class UtilsModule {
+public abstract class UtilsModule {
+
+    @Binds
+    @NonNull
+    @Singleton
+    public abstract RxUtilsAbs provideRxUtilsAbs(RxUtils rxUtils);
+
 
     @Provides
     @NonNull
     @Singleton
-    public RxUtilsAbs provideRxUtilsAbs(Context context) {
-        return new RxUtils(context);
-    }
-
-    @Provides
-    @NonNull
-    @Singleton
-    public NetworkUtils provideNetworkUtils(Context context, NetworkChannel networkChannel) {
+    public static NetworkUtils provideNetworkUtils(Context context, NetworkChannel networkChannel) {
         return new NetworkUtils(context, networkChannel);
     }
 }
