@@ -1,28 +1,31 @@
 package com.luisaguirre.daggertutorial;
 
+import android.app.Activity;
 import android.app.Application;
 
-import com.luisaguirre.daggertutorial.di.component.AppComponent;
-import com.luisaguirre.daggertutorial.di.component.DaggerAppComponent;
+import com.luisaguirre.daggertutorial.di.component.DaggerMyApplicationComponent;
 
-public class App extends Application {
+import javax.inject.Inject;
 
-    private static AppComponent component;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
 
-    public static AppComponent getComponent() {
-        return component;
-    }
+public class App extends Application implements HasActivityInjector{
+
+    @Inject
+    DispatchingAndroidInjector<Activity> androidInjector;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        component = buildComponent();
+        DaggerMyApplicationComponent.builder()
+                .context(this)
+                .build()
+                .inject(this);
     }
 
-    private AppComponent buildComponent() {
-
-        return DaggerAppComponent.builder()
-                .context(this)
-                .build();
+    @Override
+    public DispatchingAndroidInjector<Activity> activityInjector() {
+        return androidInjector;
     }
 }

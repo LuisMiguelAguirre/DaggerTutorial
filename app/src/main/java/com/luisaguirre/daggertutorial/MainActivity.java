@@ -9,19 +9,20 @@ import com.luisaguirre.daggertutorial.util.RxUtilsAbs;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
+
 public class MainActivity extends AppCompatActivity {
 
     @Inject
     NetworkUtils networkUtils;
 
     @Inject
-    RxUtilsAbs rxUtils;
+    RxUtils rxUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        App.getComponent().inject(this);
     }
 }
