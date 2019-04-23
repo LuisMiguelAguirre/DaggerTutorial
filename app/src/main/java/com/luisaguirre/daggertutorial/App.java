@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.luisaguirre.daggertutorial.di.component.AppComponent;
 import com.luisaguirre.daggertutorial.di.component.DaggerAppComponent;
-import com.luisaguirre.daggertutorial.di.module.AppModule;
 
 public class App extends Application {
 
@@ -23,7 +22,7 @@ public class App extends Application {
     private AppComponent buildComponent() {
 
         return DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
+                .context(this)
                 .build();
     }
 }
